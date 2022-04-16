@@ -13,10 +13,11 @@ namespace Contador
         public static extern bool UnregisterHotKey(IntPtr hWnd, int id);
 
         const int HOTKEY_ID = 1;
-        
+
+        private int KeyCombo = 0;
+
         public Main()
         {
-            RegisterHotKey(this.Handle, HOTKEY_ID, 2, (int)Keys.D9);
             InitializeComponent();
         }
         
@@ -49,6 +50,26 @@ namespace Contador
         private void Main_FormClosing(object sender, FormClosingEventArgs e)
         {
             UnregisterHotKey(this.Handle, 1);
+        }
+
+        private void altRB_CheckedChanged(object sender, EventArgs e)
+        {
+            KeyCombo = 1;
+        }
+
+        private void ctrlRB_CheckedChanged(object sender, EventArgs e)
+        {
+            KeyCombo = 2;
+        }
+
+        private void shiftRB_CheckedChanged(object sender, EventArgs e)
+        {
+            KeyCombo = 4;
+        }
+
+        private void btnRegistrar_Click(object sender, EventArgs e)
+        {
+            RegisterHotKey(this.Handle, HOTKEY_ID, KeyCombo, txtTecla.Text.ToUpper().ToCharArray()[0]);
         }
     }
 }
